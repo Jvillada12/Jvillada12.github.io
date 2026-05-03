@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Johnnatan Villada — Senior Data Engineer. 20+ years in technology, 5+ specialized in fintech and banking-grade data infrastructure. Ex-Bancolombia, Ex-Nequi, Ex-Nutresa.">
+<meta name="author" content="Johnnatan Villada">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Johnnatan Villada — Senior Data Engineer">
+<meta property="og:description" content="Banking-grade data infrastructure. Ex-Bancolombia, Ex-Nequi, Ex-Nutresa. Building systems that move money for tier-1 financial institutions in Latin America.">
+<meta property="og:url" content="https://jvillada12.github.io/">
+<meta property="profile:first_name" content="Johnnatan">
+<meta property="profile:last_name" content="Villada">
+
+<title>Johnnatan Villada — Senior Data Engineer</title>
+
+<!-- Fonts: editorial + technical pairing -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; }
+
+/* ==========================================================================
+   Tokens — dark-first, editorial palette
+   ========================================================================== */
+:root {
+  /* Dark mode (default) */
+  --paper: #0a0a0b;
+  --paper-soft: #111113;
+  --paper-line: #1a1a1d;
+  --ink: #ededee;
+  --ink-soft: #b4b4b8;
+  --ink-faint: #6e6e74;
+  --accent: #d4a574;        /* warm amber — editorial, no cliché blue */
+  --accent-soft: #d4a57420;
+  --signal: #5cd6a8;        /* subtle mint for "live" indicators */
+  --rule: #232327;
+
+  /* Spacing scale (golden-ish ratio) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 7rem;
+
+  /* Type scale */
+  --t-eyebrow: 0.75rem;
+  --t-body: 1.0625rem;
+  --t-lead: 1.25rem;
+  --t-h3: 1.5rem;
+  --t-h2: 2.25rem;
+  --t-h1: clamp(2.75rem, 7vw, 5.5rem);
+
+  /* Container */
+  --max-w: 76rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+[data-theme="light"] {
+  --paper: #faf8f4;
+  --paper-soft: #f1ede5;
+  --paper-line: #e8e2d4;
+  --ink: #1a1a1c;
+  --ink-soft: #4a4a4f;
+  --ink-faint: #82828a;
+  --accent: #8a5a2b;
+  --accent-soft: #8a5a2b20;
+  --signal: #2d8b65;
+  --rule: #d4cdb8;
+}
+
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+section { padding: var(--s-9) 0; position: relative; }
+section + section { border-top: 1px solid var(--rule); }
+
+/* Eyebrow label — editorial section markers */
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Headings — Fraunces for editorial weight */
+h1, h2, h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+h2 { font-size: var(--t-h2); margin-bottom: var(--s-6); }
+h3 { font-size: var(--t-h3); line-height: 1.2; }
+
+/* ==========================================================================
+   Header / nav
+   ========================================================================== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 10, 11, 0.72);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+[data-theme="light"] .nav { background: rgba(250, 248, 244, 0.78); }
+.nav.scrolled { border-bottom-color: var(--rule); }
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--s-4);
+  padding-bottom: var(--s-4);
+}
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.brand span { color: var(--accent); }
+.nav-controls { display: flex; align-items: center; gap: var(--s-5); }
+.lang-toggle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  display: flex;
+  gap: var(--s-2);
+}
+.lang-toggle button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+.lang-toggle button[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--paper-soft);
+}
+.lang-toggle button:hover { color: var(--ink); }
+.theme-toggle {
+  width: 2rem; height: 2rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+}
+.theme-toggle:hover { background: var(--paper-soft); }
+.theme-toggle svg { width: 1rem; height: 1rem; }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  min-height: calc(100vh - 4rem);
+  display: flex;
+  align-items: center;
+  padding: var(--s-9) 0 var(--s-8);
+  position: relative;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-7);
+  width: 100%;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 7fr 4fr;
+    gap: var(--s-8);
+  }
+}
+.hero h1 {
+  font-size: var(--t-h1);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  margin: var(--s-5) 0 var(--s-6);
+  font-variation-settings: 'opsz' 144;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+.hero-lede {
+  font-size: var(--t-lead);
+  color: var(--ink-soft);
+  max-width: 38ch;
+  line-height: 1.45;
+}
+.hero-lede strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+  padding-top: var(--s-2);
+}
+
+/* --- Portrait, editorial-style framed photo --- */
+.portrait {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: var(--paper-soft);
+  padding: var(--s-3);
+}
+.portrait::before {
+  /* corner-mark, top-left */
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 12px; height: 12px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+.portrait::after {
+  /* corner-mark, bottom-right */
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 12px; height: 12px;
+  border-bottom: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+}
+.portrait img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: contrast(1.02) saturate(0.95);
+}
+.portrait figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: var(--s-3) var(--s-2) var(--s-2);
+  border-top: 1px dashed var(--rule);
+  margin-top: var(--s-3);
+}
+.portrait-label {
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.portrait-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Vitals: small magazine-style data sheet under photo --- */
+.vitals {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s-4);
+}
+.vitals > div {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+.vitals dt {
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
+.vitals dd {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Metrics band — magazine-style horizontal stats strip
+   ========================================================================== */
+.metrics-band {
+  padding: var(--s-7) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background:
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-soft) 50%, var(--paper) 100%);
+}
+section + .metrics-band { border-top: 1px solid var(--rule); }
+.metrics-band + section { border-top: 0; }
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6);
+}
+@media (min-width: 720px) {
+  .metrics-strip {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-7);
+  }
+}
+.metrics-strip .metric {
+  position: relative;
+  padding-left: var(--s-4);
+}
+.metrics-strip .metric::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 100%;
+  background: var(--accent);
+  opacity: 0.85;
+}
+.metrics-strip .num {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: var(--s-2);
+  font-variation-settings: 'opsz' 144;
+}
+.metrics-strip .num::after {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-left: 0.2em;
+  vertical-align: middle;
+  transform: translateY(-0.4em);
+}
+.metrics-strip .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  line-height: 1.45;
+}
+
+/* Old hero metric block — keep for backwards compat, hidden (not rendered) */
+.location { display: none; }
+.metrics { display: none; }
+
+/* ==========================================================================
+   About — narrative block
+   ========================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-7);
+}
+@media (min-width: 900px) {
+  .about-grid { grid-template-columns: 4fr 8fr; gap: var(--s-8); }
+}
+.about-prose {
+  font-size: var(--t-lead);
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 60ch;
+}
+.about-prose p + p { margin-top: var(--s-5); }
+.about-prose strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.about-prose .highlight {
+  color: var(--accent);
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+}
+
+/* Pull quote — magazine-style highlight */
+.pullquote {
+  margin: var(--s-7) 0 0;
+  padding: var(--s-5) 0 0;
+  border-top: 1px solid var(--rule);
+  position: relative;
+}
+.pullquote::before {
+  content: '“';
+  position: absolute;
+  top: var(--s-3);
+  left: 0;
+  font-family: 'Fraunces', serif;
+  font-size: 4rem;
+  line-height: 0.7;
+  color: var(--accent);
+  font-weight: 300;
+}
+.pullquote p {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  padding-left: 2.5rem;
+  font-variation-settings: 'opsz' 144;
+}
+.pullquote em {
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* ==========================================================================
+   Experience — timeline
+   ========================================================================== */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+  position: relative;
+  counter-reset: rolecount;
+}
+.role {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+  position: relative;
+  counter-increment: rolecount;
+}
+.role::before {
+  /* large editorial number, top-left of role */
+  content: counter(rolecount, decimal-leading-zero);
+  position: absolute;
+  top: -0.4em;
+  left: 0;
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 900px) {
+  .role { grid-template-columns: 4fr 8fr; gap: var(--s-7); }
+  .role::before {
+    font-size: 0.85rem;
+    top: 0.4em;
+    left: -3rem;
+  }
+}
+.role-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.role-dates {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+.role-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--signal);
+}
+.role-current::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--signal);
+  border-radius: 50%;
+}
+.role-company {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.role-company small {
+  display: block;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: var(--s-2);
+}
+.role-title {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+.role-body {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.role-body > p { margin-bottom: var(--s-5); }
+.role-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+.role-bullets li {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+}
+.role-bullets li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1px;
+  background: var(--accent);
+  margin-top: 0.7em;
+}
+.role-bullets b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.role-stack {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px dashed var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+.role-stack b {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Stack — categorized chips
+   ========================================================================== */
+.stack-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-7);
+}
+@media (min-width: 720px) {
+  .stack-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .stack-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.stack-block h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-4);
+}
+.stack-block p {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   Education
+   ========================================================================== */
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.edu-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid var(--rule);
+}
+@media (min-width: 720px) {
+  .edu-item { grid-template-columns: 4fr 8fr; gap: var(--s-5); align-items: baseline; }
+}
+.edu-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  color: var(--ink-faint);
+}
+.edu-body strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: var(--s-1);
+}
+.edu-body span { color: var(--ink-soft); font-size: 0.9375rem; }
+
+/* ==========================================================================
+   Contact
+   ========================================================================== */
+.contact-card {
+  padding: var(--s-7);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--paper-soft) 0%, var(--paper) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 0%, var(--accent-soft) 0%, transparent 50%);
+  pointer-events: none;
+}
+.contact-card > * { position: relative; }
+.contact-card h2 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: var(--s-5);
+  max-width: 18ch;
+}
+.contact-card p {
+  color: var(--ink-soft);
+  max-width: 50ch;
+  margin-bottom: var(--s-6);
+  font-size: var(--t-lead);
+}
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  transition: all 0.18s ease;
+}
+.contact-link svg { width: 1rem; height: 1rem; opacity: 0.8; }
+.contact-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+.contact-link.primary {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+[data-theme="light"] .contact-link.primary { color: #faf8f4; }
+.contact-link.primary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.foot {
+  padding: var(--s-7) 0 var(--s-6);
+  border-top: 1px solid var(--rule);
+  margin-top: var(--s-7);
+}
+.foot-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+.foot-inner a:hover { color: var(--ink); }
+
+/* ==========================================================================
+   Bilingual swap — !important needed because some elements have
+   explicit display rules (e.g. .role-company small { display: block })
+   ========================================================================== */
+html:not([data-lang="es"]) [lang-block="es"] { display: none !important; }
+html[data-lang="es"] [lang-block="en"] { display: none !important; }
+
+/* ==========================================================================
+   Reveal on scroll — only kicks in when JS adds .js-ready to <html>
+   (Default: content is visible. JS opt-in for the animation.)
+   ========================================================================== */
+.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* Selection */
+::selection { background: var(--accent); color: var(--paper); }
+
+/* Print: minimal but legible */
+@media print {
+  .nav, .theme-toggle, .lang-toggle { display: none; }
+  body { background: white; color: black; }
+  section { padding: 1rem 0; page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     NAV
+     ========================================================================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">Johnnatan Villada<span>.</span></a>
+    <nav class="nav-controls" aria-label="Site controls">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button id="lang-en" aria-pressed="true" aria-label="English">EN</button>
+        <button id="lang-es" aria-pressed="false" aria-label="Español">ES</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ==========================================================================
+     HERO
+     ========================================================================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <div class="eyebrow reveal" lang-block="en">Senior Data Engineer · Available for opportunities</div>
+      <div class="eyebrow reveal" lang-block="es">Senior Data Engineer · Abierto a oportunidades</div>
+
+      <h1 class="reveal" lang-block="en">
+        I build the data systems that <em>move money</em> for tier-1 banks in Latin America.
+      </h1>
+      <h1 class="reveal" lang-block="es">
+        Construyo los sistemas de datos que <em>mueven dinero</em> en los principales bancos de Latinoamérica.
+      </h1>
+
+      <p class="hero-lede reveal" lang-block="en">
+        Twenty years in technology. Five specialized in <strong>fintech and banking-grade data infrastructure</strong>. Pipelines that handle millions of daily transactions, under the regulatory rigor that financial regulators expect.
+      </p>
+      <p class="hero-lede reveal" lang-block="es">
+        Veinte años en tecnología. Cinco especializado en <strong>infraestructura de datos para fintech y banca</strong>. Pipelines que manejan millones de transacciones diarias, bajo el rigor regulatorio que exigen los reguladores financieros.
+      </p>
+    </div>
+
+    <aside class="hero-side reveal">
+      <figure class="portrait">
+        <img src="photo.jpg" alt="Johnnatan Villada — Senior Data Engineer" width="900" height="1072" loading="eager" decoding="async">
+        <figcaption>
+          <span class="portrait-label">Johnnatan Villada Flórez</span>
+          <span class="portrait-role" lang-block="en">Senior Data Engineer · Tech Lead</span>
+          <span class="portrait-role" lang-block="es">Senior Data Engineer · Tech Lead</span>
+        </figcaption>
+      </figure>
+
+      <dl class="vitals">
+        <div>
+          <dt lang-block="en">Based</dt>
+          <dt lang-block="es">Ubicación</dt>
+          <dd>Medellín, CO</dd>
+        </div>
+        <div>
+          <dt lang-block="en">Currently</dt>
+          <dt lang-block="es">Actualmente</dt>
+          <dd>YaYa Fintech</dd>
+        </div>
+        <div>
+          <dt lang-block="en">Open to</dt>
+          <dt lang-block="es">Abierto a</dt>
+          <dd lang-block="en">Remote · LATAM · EU</dd>
+          <dd lang-block="es">Remoto · LATAM · EU</dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     METRICS BAND — between hero and about, magazine-style stats strip
+     ========================================================================== -->
+<section class="metrics-band" aria-label="Career numbers">
+  <div class="wrap">
+    <div class="metrics-strip">
+      <div class="metric reveal">
+        <div class="num">20+</div>
+        <div class="label" lang-block="en">Years in technology</div>
+        <div class="label" lang-block="es">Años en tecnología</div>
+      </div>
+      <div class="metric reveal">
+        <div class="num">5+</div>
+        <div class="label" lang-block="en">Years in fintech &amp; banking</div>
+        <div class="label" lang-block="es">Años en fintech y banca</div>
+      </div>
+      <div class="metric reveal">
+        <div class="num">120+</div>
+        <div class="label" lang-block="en">Engineers influenced at Nequi</div>
+        <div class="label" lang-block="es">Ingenieros influenciados en Nequi</div>
+      </div>
+      <div class="metric reveal">
+        <div class="num">3</div>
+        <div class="label" lang-block="en">Tier-1 banks delivered for</div>
+        <div class="label" lang-block="es">Bancos tier-1 atendidos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     ABOUT
+     ========================================================================== -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="eyebrow reveal" lang-block="en">01 · About</div>
+      <div class="eyebrow reveal" lang-block="es">01 · Acerca de</div>
+      <h2 class="reveal" lang-block="en" style="margin-top:var(--s-5)">The transfer skill.</h2>
+      <h2 class="reveal" lang-block="es" style="margin-top:var(--s-5)">La transferencia de rigor.</h2>
+    </div>
+
+    <div class="about-prose reveal" lang-block="en">
+      <p>I design and build data platforms that handle the level of scale, reliability, and regulatory rigor that <strong>banking demands</strong>. My work sits at the intersection of three things: high-volume data pipelines (millions of transactions daily), modern cloud architecture (AWS-first, multi-cloud capable), and the operational discipline that financial regulators expect.</p>
+
+      <p>My differentiator isn't a stack — it's <span class="highlight">the transfer skill</span>. I take rigor learned in regulated banking environments and apply it to non-banking and startup contexts, raising operational standards wherever I work. That's how I delivered for Nutresa after years at Nequi and Bancolombia, and that's how I'm building YaYa today.</p>
+
+      <p>I'm equally comfortable as an individual contributor designing pipelines and as a technical leader establishing standards adopted by 100+ engineers. The first 16 years were the hands-on foundation — hardware, networks, ERP, security, IT leadership in regulated healthcare. The last 5 made me a specialist. Both halves matter.</p>
+
+      <blockquote class="pullquote">
+        <p>Banking taught me that <em>data is never just data</em> — it's accountability. I bring that discipline wherever the systems matter.</p>
+      </blockquote>
+    </div>
+
+    <div class="about-prose reveal" lang-block="es">
+      <p>Diseño y construyo plataformas de datos al nivel de escala, confiabilidad y rigor regulatorio que <strong>la banca exige</strong>. Mi trabajo está en la intersección de tres cosas: pipelines de datos de alto volumen (millones de transacciones diarias), arquitectura cloud moderna (AWS-first, multi-cloud) y la disciplina operacional que los reguladores financieros esperan.</p>
+
+      <p>Mi diferenciador no es un stack — es <span class="highlight">la transferencia de rigor</span>. Tomo el rigor aprendido en banca regulada y lo aplico a entornos no bancarios y de startup, elevando estándares operacionales donde sea que trabajo. Así entregué en Nutresa tras años en Nequi y Bancolombia, y así estoy construyendo YaYa hoy.</p>
+
+      <p>Soy igualmente cómodo como contribuidor individual diseñando pipelines y como líder técnico estableciendo estándares adoptados por más de 100 ingenieros. Los primeros 16 años fueron la base hands-on — hardware, redes, ERP, seguridad, liderazgo de TI en salud regulada. Los últimos 5 me hicieron especialista. Las dos mitades importan.</p>
+
+      <blockquote class="pullquote">
+        <p>La banca me enseñó que <em>los datos nunca son solo datos</em> — son responsabilidad. Llevo esa disciplina donde sea que los sistemas importan.</p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     EXPERIENCE
+     ========================================================================== -->
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow reveal" lang-block="en" style="margin-bottom:var(--s-5)">02 · Experience</div>
+    <div class="eyebrow reveal" lang-block="es" style="margin-bottom:var(--s-5)">02 · Experiencia</div>
+    <h2 class="reveal" lang-block="en">Where I've built it.</h2>
+    <h2 class="reveal" lang-block="es">Dónde lo he construido.</h2>
+
+    <div class="timeline" style="margin-top:var(--s-7)">
+
+      <!-- YAYA -->
+      <article class="role reveal">
+        <div class="role-meta">
+          <div class="role-dates"><span class="role-current">2025 — Present</span></div>
+          <div class="role-company">YaYa
+            <small lang-block="en">Digital credit fintech (early-stage startup) · Medellín</small>
+            <small lang-block="es">Fintech de crédito digital (startup temprana) · Medellín</small>
+          </div>
+          <div class="role-title">Tech Lead — Senior Data Engineer &amp; Product</div>
+        </div>
+        <div class="role-body">
+          <p lang-block="en">Hired to build YaYa's technical foundation from the ground up — bringing banking-grade rigor to an early-stage fintech without slowing it down. Direct collaboration with the CEO on roadmap and strategy.</p>
+          <p lang-block="es">Contratado para construir la base técnica de YaYa desde cero — trayendo rigor de banca a una fintech temprana sin comprometer su velocidad. Colaboración directa con el CEO en roadmap y estrategia.</p>
+
+          <ul class="role-bullets" lang-block="en">
+            <li><span><b>Banking-grade transactional core.</b> Designed and implemented a cloud-native transactional core on AWS DynamoDB. Architecture follows international banking standards: event sourcing for full immutability, double-entry accounting, complete regulatory traceability, horizontal scalability for millions of users.</span></li>
+            <li><span><b>AWS-native, event-driven architecture.</b> Lambda + EventBridge for asynchronous, decoupled, observable processing. Single source of truth for customers, credit lines, transactions, merchants, settlements, and accounting.</span></li>
+            <li><span><b>Operations panel (VIRGILIO).</b> End-to-end web platform integrating callbacks with the ML scoring pipeline. Reduced credit evaluation from 48 hours to 30 minutes (~96× faster).</span></li>
+            <li><span><b>Modern data platform.</b> S3 (data lake) + Redshift (data warehouse) orchestrated with Apache Airflow. Foundation for risk analytics, regulatory reporting, and ML pipelines.</span></li>
+            <li><span><b>IT Governance from zero.</b> Access management, secrets handling, security policies, regulatory compliance — banking-grade operational standards in a startup.</span></li>
+            <li><span><b>Agile transformation.</b> Led company-wide Scrum adoption across Engineering, Operations, Commercial, and Risk. Designed the framework and delivered training myself.</span></li>
+          </ul>
+
+          <ul class="role-bullets" lang-block="es">
+            <li><span><b>Core transaccional banking-grade.</b> Diseñé e implementé un core transaccional cloud-native sobre AWS DynamoDB. Estándares de banca internacional: event sourcing para inmutabilidad, contabilidad por doble entrada, trazabilidad regulatoria completa, escalabilidad horizontal para millones de usuarios.</span></li>
+            <li><span><b>Arquitectura AWS-nativa, event-driven.</b> Lambda + EventBridge para procesamiento asíncrono, desacoplado, observable. Fuente única de verdad para clientes, líneas de crédito, transacciones, comercios, liquidaciones y contabilidad.</span></li>
+            <li><span><b>Panel de operaciones (VIRGILIO).</b> Plataforma web end-to-end con callbacks integrados al pipeline de scoring ML. Evaluación crediticia reducida de 48 horas a 30 minutos (~96× más rápido).</span></li>
+            <li><span><b>Plataforma de datos moderna.</b> S3 (data lake) + Redshift (data warehouse) orquestado con Apache Airflow. Base para analítica de riesgo, reportería regulatoria y pipelines de ML.</span></li>
+            <li><span><b>Gobierno de TI desde cero.</b> Gestión de accesos, manejo de secretos, políticas de seguridad, cumplimiento normativo — estándares operacionales de banca en una startup.</span></li>
+            <li><span><b>Transformación ágil.</b> Lideré la adopción de Scrum en toda la compañía — Ingeniería, Operaciones, Comercial y Riesgos. Diseñé el framework e impartí la capacitación.</span></li>
+          </ul>
+
+          <div class="role-stack"><b>Stack:</b> AWS (DynamoDB, Lambda, EventBridge, API Gateway, S3, Redshift, Cognito) · Apache Airflow · Python · React · Azure DevOps · Scrum</div>
+        </div>
+      </article>
+
+      <!-- NUTRESA -->
+      <article class="role reveal">
+        <div class="role-meta">
+          <div class="role-dates">2024 — 2025</div>
+          <div class="role-company">Grupo Nutresa
+            <small lang-block="en">Contractor via Michael Page · Remote, Colombia</small>
+            <small lang-block="es">Contratado vía Michael Page · Remoto, Colombia</small>
+          </div>
+          <div class="role-title">Senior Data Engineer</div>
+        </div>
+        <div class="role-body">
+          <p lang-block="en">Contracted to lead the technical evolution of the Delta Data Model for the Market Intelligence Unit at one of Latin America's largest food conglomerates.</p>
+          <p lang-block="es">Contratado para liderar la evolución técnica del Modelo de Datos Delta para la Unidad de Inteligencia de Mercados de uno de los mayores conglomerados de alimentos de Latinoamérica.</p>
+
+          <ul class="role-bullets" lang-block="en">
+            <li><span><b>Delta Evolution.</b> Led complete migration and standardization of business-critical databases and stored procedures. Reduced processing time by 40%.</span></li>
+            <li><span><b>Data Certification Model.</b> Designed continuous audit pipelines and quality indicators. Improved commercial data reliability by 35%.</span></li>
+            <li><span><b>Pipelines at scale.</b> ETL/ELT in AWS Glue, Redshift, S3, Airflow processing commercial data across the entire group.</span></li>
+            <li><span><b>Cross-domain transfer.</b> Brought OWASP and DAMA standards plus modular technical documentation into a non-banking domain — establishing a replicable framework for future Nutresa data initiatives.</span></li>
+          </ul>
+
+          <ul class="role-bullets" lang-block="es">
+            <li><span><b>Evolución Delta.</b> Lideré migración y estandarización completa de bases de datos y stored procedures críticos. Tiempos de procesamiento reducidos en 40%.</span></li>
+            <li><span><b>Modelo de Certificación del Dato.</b> Pipelines de auditoría continua e indicadores de calidad. Confiabilidad de datos comerciales mejorada en 35%.</span></li>
+            <li><span><b>Pipelines a escala.</b> ETL/ELT en AWS Glue, Redshift, S3, Airflow procesando datos comerciales de todo el grupo.</span></li>
+            <li><span><b>Transferencia entre dominios.</b> Llevé estándares OWASP y DAMA junto con documentación técnica modular a un dominio no bancario — framework replicable para futuras iniciativas de datos en Nutresa.</span></li>
+          </ul>
+
+          <div class="role-stack"><b>Stack:</b> AWS Glue · Redshift · S3 · Apache Airflow · PySpark · Kinesis · Python · SQL</div>
+        </div>
+      </article>
+
+      <!-- NEQUI -->
+      <article class="role reveal">
+        <div class="role-meta">
+          <div class="role-dates">2022 — 2024</div>
+          <div class="role-company">Bancolombia · Nequi
+            <small lang-block="en">Digital banking subsidiary · 20M+ users · Medellín</small>
+            <small lang-block="es">Subsidiaria de banca digital · +20M usuarios · Medellín</small>
+          </div>
+          <div class="role-title">Senior Data Engineer — DataOps Chapter Lead</div>
+        </div>
+        <div class="role-body">
+          <p lang-block="en">Led the DataOps Chapter at Nequi — a horizontal technical leadership role spanning 18 squads and 120+ engineers across the company.</p>
+          <p lang-block="es">Lideré el Chapter DataOps en Nequi — un rol de liderazgo técnico horizontal abarcando 18 squads y más de 120 ingenieros en toda la compañía.</p>
+
+          <ul class="role-bullets" lang-block="en">
+            <li><span><b>Landing Zone migration.</b> Designed and led the data migration to AWS Landing Zone, ensuring efficient integration with the bank's core systems.</span></li>
+            <li><span><b>Standards at scale.</b> Established the company-wide DataOps standards adopted by 120+ data engineers across 18 squads — multiplier impact beyond individual deliverables.</span></li>
+            <li><span><b>Performance.</b> Optimized ETL/ELT pipelines using AWS Glue, Redshift, Databricks. +40% efficiency.</span></li>
+            <li><span><b>Enterprise security.</b> PaloAlto validations and OWASP Top 10 compliance for SFC (Colombian financial regulator) requirements; observability with Dynatrace.</span></li>
+            <li><span><b>High-availability data architecture.</b> Pipelines processing millions of daily transactions in real-time, ensuring 24/7 availability and millisecond response.</span></li>
+          </ul>
+
+          <ul class="role-bullets" lang-block="es">
+            <li><span><b>Migración a Landing Zone.</b> Diseñé y lideré la migración de datos a AWS Landing Zone, asegurando integración eficiente con los sistemas core del banco.</span></li>
+            <li><span><b>Estándares a escala.</b> Establecí los estándares DataOps adoptados en toda la compañía por más de 120 ingenieros de datos en 18 squads — impacto multiplicador.</span></li>
+            <li><span><b>Performance.</b> Optimicé pipelines ETL/ELT con AWS Glue, Redshift, Databricks. +40% en eficiencia.</span></li>
+            <li><span><b>Seguridad enterprise.</b> Validaciones PaloAlto y cumplimiento OWASP Top 10 para requisitos de la SFC; observabilidad con Dynatrace.</span></li>
+            <li><span><b>Arquitectura de datos de alta disponibilidad.</b> Pipelines procesando millones de transacciones diarias en tiempo real, con disponibilidad 24/7 y respuesta en milisegundos.</span></li>
+          </ul>
+
+          <div class="role-stack"><b>Stack:</b> AWS Glue · Redshift · S3 · Databricks · Apache Airflow · Python · PySpark · Dynatrace · DataOps</div>
+        </div>
+      </article>
+
+      <!-- SOPHOS -->
+      <article class="role reveal">
+        <div class="role-meta">
+          <div class="role-dates">2020 — 2022</div>
+          <div class="role-company">Sophos Solutions
+            <small lang-block="en">Banking-sector consultancy (acquired by GFT Technologies, 2023) · Medellín / Panama</small>
+            <small lang-block="es">Consultoría del sector bancario (adquirida por GFT Technologies, 2023) · Medellín / Panamá</small>
+          </div>
+          <div class="role-title">Senior Data Engineer &amp; Banking Solutions Consultant</div>
+        </div>
+        <div class="role-body">
+          <p lang-block="en">Placed on critical projects for tier-1 banks across Colombia and Panama — the deliberate pivot that converted my 17-year general tech career into financial infrastructure specialization.</p>
+          <p lang-block="es">Asignado a proyectos críticos para bancos tier-1 en Colombia y Panamá — el pivote deliberado que convirtió mi carrera tecnológica de 17 años en especialización en infraestructura financiera.</p>
+
+          <ul class="role-bullets" lang-block="en">
+            <li><span><b>Bancolombia — Payment Button.</b> Contributed to the design and implementation of the payment gateway used today by thousands of merchants across Colombia. Built data integrations for strategic partners (Tigo, Virgin Mobile). Worked on the bank's Landing Zone data architecture, designing pipelines consuming from Redshift and Impala.</span></li>
+            <li><span><b>Banistmo (Panama).</b> Led the end-to-end construction of a commercial credit evaluation platform. Architected in Python/Django with SQL Server integration — credit scoring, automated reporting, dashboards. Reduced credit analysis time by 65%.</span></li>
+            <li><span><b>Banesco (Panama).</b> PL/SQL specialist for banking and financial reporting. Optimized stored procedures meeting the most demanding regulatory requirements.</span></li>
+          </ul>
+
+          <ul class="role-bullets" lang-block="es">
+            <li><span><b>Bancolombia — Botón Bancolombia.</b> Contribuí al diseño e implementación de la pasarela de pagos usada hoy por miles de comercios en Colombia. Construí integraciones de datos para socios estratégicos (Tigo, Virgin Mobile). Trabajé en la arquitectura de datos de la Landing Zone del banco, diseñando pipelines consumiendo de Redshift e Impala.</span></li>
+            <li><span><b>Banistmo (Panamá).</b> Lideré la construcción end-to-end de una plataforma de evaluación crediticia comercial. Arquitectada en Python/Django con SQL Server — scoring crediticio, reportería automatizada, dashboards. Tiempo de análisis reducido en 65%.</span></li>
+            <li><span><b>Banesco (Panamá).</b> Especialista PL/SQL para reportería bancaria y financiera. Optimicé stored procedures cumpliendo los requerimientos regulatorios más exigentes.</span></li>
+          </ul>
+
+          <div class="role-stack"><b>Stack:</b> Python · Django · PL/SQL · Oracle · SQL Server · AWS (Landing Zone, Redshift) · REST APIs · Microservices</div>
+        </div>
+      </article>
+
+      <!-- EARLIER -->
+      <article class="role reveal">
+        <div class="role-meta">
+          <div class="role-dates">2003 — 2019</div>
+          <div class="role-company"><span lang-block="en">Earlier Technology Career</span><span lang-block="es">Carrera Tecnológica Anterior</span>
+            <small lang-block="en">Multiple Colombian companies (incl. IMCA Ltda.) · Medellín</small>
+            <small lang-block="es">Múltiples empresas colombianas (incl. IMCA Ltda.) · Medellín</small>
+          </div>
+          <div class="role-title" lang-block="en">Engineering · Infrastructure · IT Leadership</div>
+          <div class="role-title" lang-block="es">Ingeniería · Infraestructura · Liderazgo de TI</div>
+        </div>
+        <div class="role-body">
+          <p lang-block="en">17 years of progressively senior roles spanning software development, database administration, and systems infrastructure — the hands-on foundation that today lets me design data systems end-to-end, from the metal up to the cloud.</p>
+          <p lang-block="es">17 años de roles progresivamente seniors abarcando desarrollo de software, administración de bases de datos e infraestructura de sistemas — la base hands-on que hoy me permite diseñar sistemas de datos end-to-end, desde el metal hasta la nube.</p>
+
+          <ul class="role-bullets" lang-block="en">
+            <li><span><b>Started in 2003 at IMCA Ltda. as an electronics technician.</b> Cut my teeth on hardware, voice/data networks, and physical infrastructure — the layer most data engineers never touch.</span></li>
+            <li><span><b>Progressed through software development, ERP/CRM (Odoo), enterprise security, and end-user technical support.</b> Building a full-stack technical foundation from infrastructure to applications.</span></li>
+            <li><span><b>Head of IT — Clínica Los Conquistadores (mid-2010s, ~1.5 years).</b> Led the entire technology area during the clinic's service rehabilitation under Colombia's Supersalud (national health regulator). Stayed through the full process until the regulator approved rehabilitation. First leadership role under regulatory pressure — and it shaped everything that came after.</span></li>
+            <li><span><b>Closed this period as Director of Technology Area</b> at multiple technology companies, leading software development, data, infrastructure, and information security teams.</span></li>
+          </ul>
+
+          <ul class="role-bullets" lang-block="es">
+            <li><span><b>Comencé en 2003 en IMCA Ltda. como técnico electrónico.</b> Mis primeros pasos en hardware, redes de voz y datos, e infraestructura física — la capa que la mayoría de data engineers nunca tocan.</span></li>
+            <li><span><b>Avancé por desarrollo de software, ERP/CRM (Odoo), seguridad informática y soporte técnico.</b> Construyendo una base técnica full-stack desde infraestructura hasta aplicaciones.</span></li>
+            <li><span><b>Jefe de Sistemas — Clínica Los Conquistadores (mediados de los 2010s, ~1.5 años).</b> Lideré toda el área de tecnología durante el proceso de rehabilitación de servicios bajo la Supersalud. Permanecí durante todo el proceso hasta que el regulador otorgó el aval. Primer rol de liderazgo bajo presión regulatoria — y formó todo lo que vino después.</span></li>
+            <li><span><b>Cerré este período como Director de Área de Tecnología</b> en múltiples empresas, liderando equipos de desarrollo, datos, infraestructura y seguridad informática.</span></li>
+          </ul>
+
+          <div class="role-stack"><b>Stack:</b> Java · PHP · MySQL · Oracle · PL/SQL · Linux · Networking · Hardware · On-premise infrastructure</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     STACK
+     ========================================================================== -->
+<section id="stack">
+  <div class="wrap">
+    <div class="eyebrow reveal" lang-block="en" style="margin-bottom:var(--s-5)">03 · Stack</div>
+    <div class="eyebrow reveal" lang-block="es" style="margin-bottom:var(--s-5)">03 · Stack técnico</div>
+    <h2 class="reveal" lang-block="en">What I work with.</h2>
+    <h2 class="reveal" lang-block="es">Con qué trabajo.</h2>
+
+    <div class="stack-grid" style="margin-top:var(--s-7)">
+      <div class="stack-block reveal">
+        <h3 lang-block="en">Cloud &amp; Infrastructure</h3>
+        <h3 lang-block="es">Cloud e Infraestructura</h3>
+        <p>AWS (DynamoDB, Lambda, EventBridge, Glue, Redshift, S3, Kinesis, RDS, API Gateway, Cognito), Azure, Google Cloud Platform, Linux, Terraform.</p>
+      </div>
+      <div class="stack-block reveal">
+        <h3 lang-block="en">Data Engineering</h3>
+        <h3 lang-block="es">Ingeniería de Datos</h3>
+        <p>Apache Airflow, dbt, PySpark, Databricks, ETL/ELT design, data modeling, Delta Lake, Data Mesh principles, DataOps.</p>
+      </div>
+      <div class="stack-block reveal">
+        <h3 lang-block="en">Languages &amp; Databases</h3>
+        <h3 lang-block="es">Lenguajes y Bases de Datos</h3>
+        <p>Python, SQL, PL/SQL, Node.js, PostgreSQL, DynamoDB, Redshift, SQL Server, Oracle, MySQL.</p>
+      </div>
+      <div class="stack-block reveal">
+        <h3 lang-block="en">Architecture Patterns</h3>
+        <h3 lang-block="es">Patrones de Arquitectura</h3>
+        <p>Event-driven architecture, event sourcing, double-entry accounting, microservices, REST APIs, CQRS, hexagonal architecture.</p>
+      </div>
+      <div class="stack-block reveal">
+        <h3 lang-block="en">Compliance &amp; Security</h3>
+        <h3 lang-block="es">Cumplimiento y Seguridad</h3>
+        <p>SFC (Colombia), OWASP Top 10, SARLAFT/AML/KYC, PaloAlto patterns, DAMA standards, audit-grade documentation.</p>
+      </div>
+      <div class="stack-block reveal">
+        <h3 lang-block="en">Practices &amp; Leadership</h3>
+        <h3 lang-block="es">Prácticas y Liderazgo</h3>
+        <p>Scrum, Kanban, DevOps/DataOps, CI/CD, Git, Azure DevOps, technical leadership, mentoring, ADRs, stakeholder management.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     EDUCATION
+     ========================================================================== -->
+<section id="education">
+  <div class="wrap">
+    <div class="eyebrow reveal" lang-block="en" style="margin-bottom:var(--s-5)">04 · Education</div>
+    <div class="eyebrow reveal" lang-block="es" style="margin-bottom:var(--s-5)">04 · Educación</div>
+    <h2 class="reveal" lang-block="en">Formal training.</h2>
+    <h2 class="reveal" lang-block="es">Formación formal.</h2>
+
+    <div class="edu-list" style="margin-top:var(--s-7)">
+      <div class="edu-item reveal">
+        <div class="edu-meta">2023 — 2027</div>
+        <div class="edu-body">
+          <strong lang-block="en">Data Science Engineering (in progress)</strong>
+          <strong lang-block="es">Ingeniería en Ciencia de Datos (en curso)</strong>
+          <span>Corporación Universitaria Iberoamericana</span>
+        </div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-meta">—</div>
+        <div class="edu-body">
+          <strong>AWS Certified Solutions Architect — Associate</strong>
+          <span>Amazon Web Services</span>
+        </div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-meta">—</div>
+        <div class="edu-body">
+          <strong>Google Cloud Professional Data Engineer</strong>
+          <span>Google Cloud</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     CONTACT
+     ========================================================================== -->
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal" lang-block="en" style="margin-bottom:var(--s-5)">05 · Contact</div>
+    <div class="eyebrow reveal" lang-block="es" style="margin-bottom:var(--s-5)">05 · Contacto</div>
+
+    <div class="contact-card reveal">
+      <h2 lang-block="en">Looking for someone who builds, not just executes?</h2>
+      <h2 lang-block="es">¿Buscas a alguien que construya, no solo ejecute?</h2>
+
+      <p lang-block="en">Open to <strong>Senior / Staff Data Engineer</strong> roles in fintech, digital banking, and payments — remote across LATAM, Europe, or hybrid in Medellín.</p>
+      <p lang-block="es">Abierto a roles de <strong>Senior / Staff Data Engineer</strong> en fintech, banca digital y pagos — remoto desde LATAM, Europa, o híbrido en Medellín.</p>
+
+      <div class="contact-links">
+        <a class="contact-link primary" href="mailto:villada.johnnatan@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>villada.johnnatan@gmail.com</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/johnnatan-villada" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a class="contact-link" href="https://github.com/Jvillada12" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55v-2.06c-3.2.7-3.87-1.37-3.87-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a class="contact-link" href="https://wa.me/573122765222" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.88 11.9L4 20l4.2-1.1a7.93 7.93 0 003.85.98h.01a7.94 7.94 0 005.54-13.56zM12.05 18.5a6.6 6.6 0 01-3.36-.92l-.24-.14-2.49.65.66-2.43-.16-.25a6.6 6.6 0 0110.27-7.94 6.55 6.55 0 011.93 4.66 6.6 6.6 0 01-6.61 6.37zm3.62-4.94c-.2-.1-1.18-.58-1.36-.65-.18-.07-.31-.1-.45.1-.13.2-.51.65-.62.78-.12.13-.23.15-.42.05-.2-.1-.84-.31-1.6-.99-.59-.52-.99-1.17-1.1-1.37-.12-.2-.01-.3.09-.4.09-.09.2-.23.3-.35.1-.12.13-.2.2-.34.07-.13.03-.25-.02-.35-.05-.1-.45-1.08-.62-1.48-.16-.39-.33-.34-.45-.34h-.39c-.13 0-.35.05-.53.25s-.7.68-.7 1.65.71 1.92.81 2.05c.1.13 1.4 2.13 3.39 2.99.47.21.84.33 1.13.42.47.15.9.13 1.24.08.38-.06 1.18-.48 1.34-.95.16-.46.16-.86.12-.95-.05-.08-.18-.13-.38-.23z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ==========================================================================
+     FOOTER
+     ========================================================================== -->
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span lang-block="en">© 2026 Johnnatan Villada Flórez · Medellín, Colombia</span>
+    <span lang-block="es">© 2026 Johnnatan Villada Flórez · Medellín, Colombia</span>
+    <a href="#top" lang-block="en">↑ Back to top</a>
+    <a href="#top" lang-block="es">↑ Volver arriba</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  // Mark JS as ready (enables reveal animations only when JS runs)
+  document.documentElement.classList.add('js-ready');
+
+  // ---- Theme toggle ----
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const iconMoon = document.getElementById('icon-moon');
+  const iconSun = document.getElementById('icon-sun');
+
+  function applyTheme(t) {
+    root.dataset.theme = t;
+    if (t === 'dark') {
+      iconMoon.style.display = 'none';
+      iconSun.style.display = 'block';
+    } else {
+      iconMoon.style.display = 'block';
+      iconSun.style.display = 'none';
+    }
+    try { localStorage.setItem('jv-theme', t); } catch(e) {}
+  }
+
+  let initialTheme = 'dark';
+  try {
+    const saved = localStorage.getItem('jv-theme');
+    if (saved === 'light' || saved === 'dark') initialTheme = saved;
+  } catch(e) {}
+  applyTheme(initialTheme);
+
+  themeBtn.addEventListener('click', () => {
+    applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+
+  // ---- Language toggle ----
+  const langEnBtn = document.getElementById('lang-en');
+  const langEsBtn = document.getElementById('lang-es');
+
+  function applyLang(l) {
+    root.dataset.lang = l;
+    root.setAttribute('lang', l);
+    langEnBtn.setAttribute('aria-pressed', l === 'en');
+    langEsBtn.setAttribute('aria-pressed', l === 'es');
+    try { localStorage.setItem('jv-lang', l); } catch(e) {}
+  }
+
+  let initialLang = 'en';
+  try {
+    const saved = localStorage.getItem('jv-lang');
+    if (saved === 'en' || saved === 'es') {
+      initialLang = saved;
+    } else if ((navigator.language || 'en').toLowerCase().startsWith('es')) {
+      initialLang = 'es';
+    }
+  } catch(e) {}
+  applyLang(initialLang);
+
+  langEnBtn.addEventListener('click', () => applyLang('en'));
+  langEsBtn.addEventListener('click', () => applyLang('es'));
+
+  // ---- Sticky nav border on scroll ----
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---- Reveal on scroll ----
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      // light stagger for hero block
+      if (el.closest('.hero')) {
+        el.style.transitionDelay = (i * 0.08) + 's';
+      }
+      io.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+})();
+</script>
+</body>
+</html>
